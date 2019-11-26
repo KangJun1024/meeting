@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /meeting
+spring:
+  #数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.100.153:3306/kj_ems?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: 123456
+  jpa:
+    database: mysql
+    show-sql: true
+    #Hibernate ddl auto (validate|create|create-drop|update)
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: com.persagy.meeting.config.MySQL5InnoDBDialectUtf8
+
+#mybatis的相关配置
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.persagy.meeting.entity
+  #开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.persagy.meeting.mapper.BookingMeetingRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.persagy.meeting.entity.BookingMeetingRoom" >
+    <id column="booking_room_id" property="bookingRoomId" jdbcType="VARCHAR" />
+    <result column="booking_person_id" property="bookingPersonId" jdbcType="VARCHAR" />
+    <result column="booking_person_name" property="bookingPersonName" jdbcType="VARCHAR" />
+    <result column="booking_person_picture" property="bookingPersonPicture" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="meeting_end_time" property="meetingEndTime" jdbcType="VARCHAR" />
+    <result column="meeting_reminders" property="meetingReminders" jdbcType="VARCHAR" />
+    <result column="meeting_start_time" property="meetingStartTime" jdbcType="VARCHAR" />
+    <result column="participants" property="participants" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+    <result column="room_name" property="roomName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="topic" property="topic" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    booking_room_id, booking_person_id, booking_person_name, booking_person_picture, 
+    create_time, meeting_end_time, meeting_reminders, meeting_start_time, participants, 
+    room_id, room_name, status, topic, update_time, valid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.persagy.meeting.entity.BookingMeetingRoomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from booking_meeting_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from booking_meeting_room
+    where booking_room_id = #{bookingRoomId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from booking_meeting_room
+    where booking_room_id = #{bookingRoomId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.persagy.meeting.entity.BookingMeetingRoomExample" >
+    delete from booking_meeting_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.persagy.meeting.entity.BookingMeetingRoom" >
+    insert into booking_meeting_room (booking_room_id, booking_person_id, booking_person_name, 
+      booking_person_picture, create_time, meeting_end_time, 
+      meeting_reminders, meeting_start_time, participants, 
+      room_id, room_name, status, 
+      topic, update_time, valid
+      )
+    values (#{bookingRoomId,jdbcType=VARCHAR}, #{bookingPersonId,jdbcType=VARCHAR}, #{bookingPersonName,jdbcType=VARCHAR}, 
+      #{bookingPersonPicture,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{meetingEndTime,jdbcType=VARCHAR}, 
+      #{meetingReminders,jdbcType=VARCHAR}, #{meetingStartTime,jdbcType=VARCHAR}, #{participants,jdbcType=VARCHAR}, 
+      #{roomId,jdbcType=VARCHAR}, #{roomName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{topic,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{valid,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.persagy.meeting.entity.BookingMeetingRoom" >
+    insert into booking_meeting_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookingRoomId != null" >
+        booking_room_id,
+      </if>
+      <if test="bookingPersonId != null" >
+        booking_person_id,
+      </if>
+      <if test="bookingPersonName != null" >
+        booking_person_name,
+      </if>
+      <if test="bookingPersonPicture != null" >
+        booking_person_picture,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="meetingEndTime != null" >
+        meeting_end_time,
+      </if>
+      <if test="meetingReminders != null" >
+        meeting_reminders,
+      </if>
+      <if test="meetingStartTime != null" >
+        meeting_start_time,
+      </if>
+      <if test="participants != null" >
+        participants,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="roomName != null" >
+        room_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="topic != null" >
+        topic,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookingRoomId != null" >
+        #{bookingRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookingPersonId != null" >
+        #{bookingPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookingPersonName != null" >
+        #{bookingPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookingPersonPicture != null" >
+        #{bookingPersonPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingEndTime != null" >
+        #{meetingEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingReminders != null" >
+        #{meetingReminders,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingStartTime != null" >
+        #{meetingStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="participants != null" >
+        #{participants,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomName != null" >
+        #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.persagy.meeting.entity.BookingMeetingRoomExample" resultType="java.lang.Integer" >
+    select count(*) from booking_meeting_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update booking_meeting_room
+    <set >
+      <if test="record.bookingRoomId != null" >
+        booking_room_id = #{record.bookingRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookingPersonId != null" >
+        booking_person_id = #{record.bookingPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookingPersonName != null" >
+        booking_person_name = #{record.bookingPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookingPersonPicture != null" >
+        booking_person_picture = #{record.bookingPersonPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingEndTime != null" >
+        meeting_end_time = #{record.meetingEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingReminders != null" >
+        meeting_reminders = #{record.meetingReminders,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingStartTime != null" >
+        meeting_start_time = #{record.meetingStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.participants != null" >
+        participants = #{record.participants,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomName != null" >
+        room_name = #{record.roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.topic != null" >
+        topic = #{record.topic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update booking_meeting_room
+    set booking_room_id = #{record.bookingRoomId,jdbcType=VARCHAR},
+      booking_person_id = #{record.bookingPersonId,jdbcType=VARCHAR},
+      booking_person_name = #{record.bookingPersonName,jdbcType=VARCHAR},
+      booking_person_picture = #{record.bookingPersonPicture,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      meeting_end_time = #{record.meetingEndTime,jdbcType=VARCHAR},
+      meeting_reminders = #{record.meetingReminders,jdbcType=VARCHAR},
+      meeting_start_time = #{record.meetingStartTime,jdbcType=VARCHAR},
+      participants = #{record.participants,jdbcType=VARCHAR},
+      room_id = #{record.roomId,jdbcType=VARCHAR},
+      room_name = #{record.roomName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      topic = #{record.topic,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.persagy.meeting.entity.BookingMeetingRoom" >
+    update booking_meeting_room
+    <set >
+      <if test="bookingPersonId != null" >
+        booking_person_id = #{bookingPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookingPersonName != null" >
+        booking_person_name = #{bookingPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookingPersonPicture != null" >
+        booking_person_picture = #{bookingPersonPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingEndTime != null" >
+        meeting_end_time = #{meetingEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingReminders != null" >
+        meeting_reminders = #{meetingReminders,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingStartTime != null" >
+        meeting_start_time = #{meetingStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="participants != null" >
+        participants = #{participants,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomName != null" >
+        room_name = #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        topic = #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=BIT},
+      </if>
+    </set>
+    where booking_room_id = #{bookingRoomId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.persagy.meeting.entity.BookingMeetingRoom" >
+    update booking_meeting_room
+    set booking_person_id = #{bookingPersonId,jdbcType=VARCHAR},
+      booking_person_name = #{bookingPersonName,jdbcType=VARCHAR},
+      booking_person_picture = #{bookingPersonPicture,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      meeting_end_time = #{meetingEndTime,jdbcType=VARCHAR},
+      meeting_reminders = #{meetingReminders,jdbcType=VARCHAR},
+      meeting_start_time = #{meetingStartTime,jdbcType=VARCHAR},
+      participants = #{participants,jdbcType=VARCHAR},
+      room_id = #{roomId,jdbcType=VARCHAR},
+      room_name = #{roomName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      topic = #{topic,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=BIT}
+    where booking_room_id = #{bookingRoomId,jdbcType=VARCHAR}
+  </update>
+</mapper>

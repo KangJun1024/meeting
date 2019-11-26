@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.persagy.meeting.mapper.TUserMapper" >
+  <resultMap id="BaseResultMap" type="com.persagy.meeting.entity.TUser" >
+    <id column="c_user_id" property="cUserId" jdbcType="VARCHAR" />
+    <result column="c_user_name" property="cUserName" jdbcType="VARCHAR" />
+    <result column="c_md5" property="cMd5" jdbcType="VARCHAR" />
+    <result column="c_password" property="cPassword" jdbcType="VARCHAR" />
+    <result column="c_state" property="cState" jdbcType="VARCHAR" />
+    <result column="c_is_Admin" property="cIsAdmin" jdbcType="VARCHAR" />
+    <result column="c_type" property="cType" jdbcType="VARCHAR" />
+    <result column="c_create_time" property="cCreateTime" jdbcType="TIMESTAMP" />
+    <result column="c_update_time" property="cUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.persagy.meeting.entity.TUser" extends="BaseResultMap" >
+    <result column="c_functions" property="cFunctions" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_user_id, c_user_name, c_md5, c_password, c_state, c_is_Admin, c_type, c_create_time, 
+    c_update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    c_functions
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.persagy.meeting.entity.TUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.persagy.meeting.entity.TUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_user
+    where c_user_id = #{cUserId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_user
+    where c_user_id = #{cUserId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.persagy.meeting.entity.TUserExample" >
+    delete from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.persagy.meeting.entity.TUser" >
+    insert into t_user (c_user_id, c_user_name, c_md5, 
+      c_password, c_state, c_is_Admin, 
+      c_type, c_create_time, c_update_time, 
+      c_functions)
+    values (#{cUserId,jdbcType=VARCHAR}, #{cUserName,jdbcType=VARCHAR}, #{cMd5,jdbcType=VARCHAR}, 
+      #{cPassword,jdbcType=VARCHAR}, #{cState,jdbcType=VARCHAR}, #{cIsAdmin,jdbcType=VARCHAR}, 
+      #{cType,jdbcType=VARCHAR}, #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP}, 
+      #{cFunctions,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.persagy.meeting.entity.TUser" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cUserId != null" >
+        c_user_id,
+      </if>
+      <if test="cUserName != null" >
+        c_user_name,
+      </if>
+      <if test="cMd5 != null" >
+        c_md5,
+      </if>
+      <if test="cPassword != null" >
+        c_password,
+      </if>
+      <if test="cState != null" >
+        c_state,
+      </if>
+      <if test="cIsAdmin != null" >
+        c_is_Admin,
+      </if>
+      <if test="cType != null" >
+        c_type,
+      </if>
+      <if test="cCreateTime != null" >
+        c_create_time,
+      </if>
+      <if test="cUpdateTime != null" >
+        c_update_time,
+      </if>
+      <if test="cFunctions != null" >
+        c_functions,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cUserId != null" >
+        #{cUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserName != null" >
+        #{cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="cMd5 != null" >
+        #{cMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="cPassword != null" >
+        #{cPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cState != null" >
+        #{cState,jdbcType=VARCHAR},
+      </if>
+      <if test="cIsAdmin != null" >
+        #{cIsAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="cType != null" >
+        #{cType,jdbcType=VARCHAR},
+      </if>
+      <if test="cCreateTime != null" >
+        #{cCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cUpdateTime != null" >
+        #{cUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cFunctions != null" >
+        #{cFunctions,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.persagy.meeting.entity.TUserExample" resultType="java.lang.Integer" >
+    select count(*) from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_user
+    <set >
+      <if test="record.cUserId != null" >
+        c_user_id = #{record.cUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserName != null" >
+        c_user_name = #{record.cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cMd5 != null" >
+        c_md5 = #{record.cMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cPassword != null" >
+        c_password = #{record.cPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cState != null" >
+        c_state = #{record.cState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cIsAdmin != null" >
+        c_is_Admin = #{record.cIsAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cType != null" >
+        c_type = #{record.cType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCreateTime != null" >
+        c_create_time = #{record.cCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cUpdateTime != null" >
+        c_update_time = #{record.cUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cFunctions != null" >
+        c_functions = #{record.cFunctions,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_user
+    set c_user_id = #{record.cUserId,jdbcType=VARCHAR},
+      c_user_name = #{record.cUserName,jdbcType=VARCHAR},
+      c_md5 = #{record.cMd5,jdbcType=VARCHAR},
+      c_password = #{record.cPassword,jdbcType=VARCHAR},
+      c_state = #{record.cState,jdbcType=VARCHAR},
+      c_is_Admin = #{record.cIsAdmin,jdbcType=VARCHAR},
+      c_type = #{record.cType,jdbcType=VARCHAR},
+      c_create_time = #{record.cCreateTime,jdbcType=TIMESTAMP},
+      c_update_time = #{record.cUpdateTime,jdbcType=TIMESTAMP},
+      c_functions = #{record.cFunctions,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_user
+    set c_user_id = #{record.cUserId,jdbcType=VARCHAR},
+      c_user_name = #{record.cUserName,jdbcType=VARCHAR},
+      c_md5 = #{record.cMd5,jdbcType=VARCHAR},
+      c_password = #{record.cPassword,jdbcType=VARCHAR},
+      c_state = #{record.cState,jdbcType=VARCHAR},
+      c_is_Admin = #{record.cIsAdmin,jdbcType=VARCHAR},
+      c_type = #{record.cType,jdbcType=VARCHAR},
+      c_create_time = #{record.cCreateTime,jdbcType=TIMESTAMP},
+      c_update_time = #{record.cUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.persagy.meeting.entity.TUser" >
+    update t_user
+    <set >
+      <if test="cUserName != null" >
+        c_user_name = #{cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="cMd5 != null" >
+        c_md5 = #{cMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="cPassword != null" >
+        c_password = #{cPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cState != null" >
+        c_state = #{cState,jdbcType=VARCHAR},
+      </if>
+      <if test="cIsAdmin != null" >
+        c_is_Admin = #{cIsAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="cType != null" >
+        c_type = #{cType,jdbcType=VARCHAR},
+      </if>
+      <if test="cCreateTime != null" >
+        c_create_time = #{cCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cUpdateTime != null" >
+        c_update_time = #{cUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cFunctions != null" >
+        c_functions = #{cFunctions,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where c_user_id = #{cUserId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.persagy.meeting.entity.TUser" >
+    update t_user
+    set c_user_name = #{cUserName,jdbcType=VARCHAR},
+      c_md5 = #{cMd5,jdbcType=VARCHAR},
+      c_password = #{cPassword,jdbcType=VARCHAR},
+      c_state = #{cState,jdbcType=VARCHAR},
+      c_is_Admin = #{cIsAdmin,jdbcType=VARCHAR},
+      c_type = #{cType,jdbcType=VARCHAR},
+      c_create_time = #{cCreateTime,jdbcType=TIMESTAMP},
+      c_update_time = #{cUpdateTime,jdbcType=TIMESTAMP},
+      c_functions = #{cFunctions,jdbcType=LONGVARCHAR}
+    where c_user_id = #{cUserId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.persagy.meeting.entity.TUser" >
+    update t_user
+    set c_user_name = #{cUserName,jdbcType=VARCHAR},
+      c_md5 = #{cMd5,jdbcType=VARCHAR},
+      c_password = #{cPassword,jdbcType=VARCHAR},
+      c_state = #{cState,jdbcType=VARCHAR},
+      c_is_Admin = #{cIsAdmin,jdbcType=VARCHAR},
+      c_type = #{cType,jdbcType=VARCHAR},
+      c_create_time = #{cCreateTime,jdbcType=TIMESTAMP},
+      c_update_time = #{cUpdateTime,jdbcType=TIMESTAMP}
+    where c_user_id = #{cUserId,jdbcType=VARCHAR}
+  </update>
+</mapper>
